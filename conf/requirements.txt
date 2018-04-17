@@ -1,0 +1,6 @@
+configparser==3.5.0
+elasticsearch==6.1.1
+python-crontab==2.2.8
+python-dateutil==2.7.0
+six==1.11.0
+urllib3==1.22

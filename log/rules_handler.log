@@ -1,0 +1,35 @@
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.005s]
+INFO:root:processing retrived documents
+INFO:root:9 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.006s]
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.011s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.011s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.005s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.005s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido

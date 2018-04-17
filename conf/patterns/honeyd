@@ -1,0 +1,7 @@
+CUSTOM_DATE %{YEAR}-%{MONTHNUM}-%{MONTHDAY}-%{HOUR}:%{MINUTE}:%{SECOND}
+
+#Describe the type of the connection
+# S - stands for connection start
+# E - stands for connection end
+# - - does not belong to any connection
+CONNECTION_TYPE ([SE-])

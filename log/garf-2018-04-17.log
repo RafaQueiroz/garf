@@ -1,0 +1,550 @@
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.045s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7efc8386ce48>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.001s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7efc8386cf28>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.001s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7efc8387f978>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.001s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7efc8387f908>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.001s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f0021a62e48>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.000s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f0021a62f28>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.000s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f0021a75978>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:GET http://localhost:9200/active_logs/_search [status:N/A request:0.000s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f0021a75908>: Failed to establish a new connection: [Errno 111] Connection refused
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.405s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.070s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.014s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.010s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.013s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.011s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.013s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.010s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.013s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.009s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido
+INFO:elasticsearch:HEAD http://localhost:9200/ [status:200 request:0.014s]
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.005s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.015s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido
+WARNING:elasticsearch:HEAD http://localhost:9200/ [status:N/A request:0.001s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f95e0af4dd8>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:HEAD http://localhost:9200/ [status:N/A request:0.000s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f95e0af4eb8>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:HEAD http://localhost:9200/ [status:N/A request:0.000s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f95e0a8a978>: Failed to establish a new connection: [Errno 111] Connection refused
+WARNING:elasticsearch:HEAD http://localhost:9200/ [status:N/A request:0.000s]
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/elasticsearch/connection/http_urllib3.py", line 149, in perform_request
+    response = self.pool.urlopen(method, url, body, retries=False, headers=request_headers, **kw)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/util/retry.py", line 333, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/packages/six.py", line 686, in reraise
+    raise value
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1026, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 964, in send
+    self.connect()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "/home/rafael/tcc/venv/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f95e0a8a908>: Failed to establish a new connection: [Errno 111] Connection refused
+INFO:root:Nenhuma estância do Elasticsearch está ativa
