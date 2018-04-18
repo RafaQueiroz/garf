@@ -10,16 +10,8 @@ def main():
     if not config['app']['garf_home']:
         print('It is necessary to set the garf_home variable at the garf.ini file')
 
-    os.system('$GARF_HOME={}'.format(config['app']['garf_home']))
-    # garantir que o servico do elasticsearch esta rodando
-
-    # garantir que o servico do logstash esta rodando
-
-    # adicionar template do honeyd no elasticsearch
-
-
     # criar cron job para executar o garf
-    script_path = config['app']['garf_home'] + 'garf.py'
+    script_path = '{}/script/execute_garf.sh'.format(config['app']['garf_home'])
 
     try:
         root_cron = CronTab(user='root')

@@ -548,3 +548,39 @@ Traceback (most recent call last):
     self, "Failed to establish a new connection: %s" % e)
 urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f95e0a8a908>: Failed to establish a new connection: [Errno 111] Connection refused
 INFO:root:Nenhuma estância do Elasticsearch está ativa
+INFO:elasticsearch:HEAD http://localhost:9200/ [status:200 request:0.223s]
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.208s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:elasticsearch:HEAD http://localhost:9200/ [status:200 request:0.012s]
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.005s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.214s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:elasticsearch:HEAD http://localhost:9200/ [status:200 request:0.013s]
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.012s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.017s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:elasticsearch:HEAD http://localhost:9200/ [status:200 request:0.012s]
+INFO:elasticsearch:GET http://localhost:9200/active_logs/_search [status:200 request:0.004s]
+INFO:root:processing retrived documents
+INFO:root:10 documents processed!
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:elasticsearch:GET http://localhost:9200/_search [status:200 request:0.010s]
+INFO:root:Founded old rules file. Adding it to the history
+INFO:root:Opening or creating file to deploy the rules
+INFO:root:Writing rules on the file
+INFO:root:Closing files
+INFO:root:nenhum log a ser inserido

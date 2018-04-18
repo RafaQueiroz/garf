@@ -1,5 +1,8 @@
 #!/bin/sh
 
+GARF_HOME='/home/rafael/tcc'
 source $GARF_HOME/venv/bin/activate
-python $GARF_HOME/src/garf.py
+cd $GARF_HOME/src/
+python garf.py
 deactivate
+cd -

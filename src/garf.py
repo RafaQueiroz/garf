@@ -136,7 +136,7 @@ def create_comand(log, add=True):
 
 def export_rules_file(logs=[], add=True):
 
-    file_path = config['app']['garf_home'] + ('scripts/custom_rules.sh' if add else 'scripts//drop_old_rules.sh')
+    file_path = '{}/scripts/{}'.format(config['app']['garf_home'], ('custom_rules.sh' if add else 'drop_old_rules.sh'))
 
     if os.path.isfile(file_path) and add:
         logging.info('Founded old rules file. Adding it to the history')
@@ -160,7 +160,7 @@ def export_rules_file(logs=[], add=True):
 
 def add_to_history(source_file_path=''):
     current_file = open(source_file_path, 'r')
-    rules_history = open(config['app']['garf_home']+'log/rules_history-{:%Y-%m-%d}.log'.format(datetime.now()), 'a')
+    rules_history = open('{}/log/rules_history-{:%Y-%m-%d}.log'.format(config['app']['garf_home'], datetime.now()), 'a')
 
     rules_history.write('# logging date: {:%Y-%m-%d %H:%M} \n'.format(datetime.now()))
 
@@ -225,5 +225,5 @@ def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='{}log/garf-{:%Y-%m-%d}.log'.format(config['app']['garf_home'], datetime.now()), level=logging.INFO)
+    logging.basicConfig(filename='{}/log/garf-{:%Y-%m-%d}.log'.format(config['app']['garf_home'], datetime.now()), level=logging.INFO)
     main()
