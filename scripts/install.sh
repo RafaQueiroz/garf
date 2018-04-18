@@ -3,6 +3,10 @@
 echo 'Setting the root path to the garf application'
 GARF_HOME='/home/rafael/tcc'
 
+echo 'Installing Python dependencies'
+sudo apt-get install python-pip
+sudo pip install virtualenv
+
 echo 'Installing Elasticsearch version 6.2.2'
 sudo apt-get install elasticsearch=6.2.2
 

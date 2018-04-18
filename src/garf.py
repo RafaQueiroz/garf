@@ -44,6 +44,8 @@ def analyse_logs(elastic):
     #Salva as regras novas
     save_active_logs(elastic, filtered_logs)
 
+    return True
+
 
 def get_logs(elastic, index='', body=''):
     # Fetch data from elasticsearch
@@ -221,7 +223,9 @@ def main():
         logging.info("Nenhuma estância do Elasticsearch está ativa")
         return
 
-    analyse_logs(es)
+    if analyse_logs(es):
+        os.system('{}/script/drop_old_rules.sh'.format(config['app']['garf_home']))
+        os.system('{}/script/custom_rules.sh'.format(config['app']['garf_home']))
 
 
 if __name__ == "__main__":
