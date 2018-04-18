@@ -27,6 +27,7 @@ curl -XPUT 'http://localhost:9200/_template/honeyd' -H 'Content-Type: applicatio
 
 echo 'creating garf cronjob'
 source $GARF_HOME/venv/bin/activate
+pip install
 cd $GARF_HOME/src
 python setup.py
 deactivate
