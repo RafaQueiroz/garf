@@ -64,7 +64,7 @@ def get_logs(elastic, index='', body=''):
     logging.info("processing retrived documents")
 
     if 'error' in result:
-        logging.error(result['message'])
+        logging.error('Erro ao executar a query. Motivo: {}'.format(result['error']['type']))
         return logs
 
     for data in result['hits']['hits']:
@@ -104,7 +104,9 @@ def group_by(elastic, fields, include_missing, body={}):
 
     body['aggs'] = agg_spec
 
-    agg_result = elastic.search(body=body)['aggregations']
+    response = elastic.search(body=body)
+    print(response)
+    agg_result = response['aggregations'] if response else []
     return get_docs_from_agg_result(agg_result, fields, include_missing)
 
 
@@ -232,9 +234,13 @@ def main():
         logging.info("Nenhuma estância do Elasticsearch está ativa")
         return
 
-    if analyse_logs(es):
-        os.system('{}/script/drop_old_rules.sh'.format(config['app']['garf_home']))
-        os.system('{}/script/custom_rules.sh'.format(config['app']['garf_home']))
+    analyse_logs(es)
+
+    logging.info('Removendo regras expiradas')
+    os.system('bash {}/script/drop_old_rules.sh'.format(config['app']['garf_home']))
+
+    logging.info('Adicionando novas regras')
+    os.system('bash {}/script/custom_rules.sh'.format(config['app']['garf_home']))
 
 
 if __name__ == "__main__":
