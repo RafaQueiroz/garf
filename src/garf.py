@@ -63,7 +63,8 @@ def get_logs(elastic, index='', body=''):
 
     logging.info("processing retrived documents")
 
-    if not result['hits'] and not result['hits']['hits']:
+    if 'error' in result:
+        logging.error(result['message'])
         return logs
 
     for data in result['hits']['hits']:
@@ -166,7 +167,11 @@ def export_rules_file(logs=[], add=True):
 
 def add_to_history(source_file_path=''):
     current_file = open(source_file_path, 'r')
-    rules_history = open('{}/log/rules_history-{:%Y-%m-%d}.log'.format(config['app']['garf_home'], datetime.now()), 'a')
+
+    if not os.path.isdir(config['app']['log']):
+        os.mkdir(config['app']['log'])
+
+    rules_history = open('{}/rules_history-{:%Y-%m-%d}.log'.format(config['app']['log'], datetime.now()), 'a')
 
     rules_history.write('# logging date: {:%Y-%m-%d %H:%M} \n'.format(datetime.now()))
 
@@ -233,7 +238,11 @@ def main():
 
 
 if __name__ == "__main__":
+
+    if not os.path.isdir(config['app']['log']):
+        os.mkdir(config['app']['log'])
+
     logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
-                        filename='{}/log/garf-{:%Y-%m-%d}.log'.format(config['app']['garf_home'],
+                        filename='{}/garf-{:%Y-%m-%d}.log'.format(config['app']['log'],
                                                                       datetime.now()), level=logging.INFO)
     main()
