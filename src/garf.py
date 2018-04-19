@@ -62,6 +62,10 @@ def get_logs(elastic, index='', body=''):
         return logs
 
     logging.info("processing retrived documents")
+
+    if not result['hits'] and not result['hits']['hits']:
+        return logs
+
     for data in result['hits']['hits']:
         raw_log = data['_source']
         log = format_dict(raw_log, fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date'])
@@ -229,5 +233,7 @@ def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='{}/log/garf-{:%Y-%m-%d}.log'.format(config['app']['garf_home'], datetime.now()), level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
+                        filename='{}/log/garf-{:%Y-%m-%d}.log'.format(config['app']['garf_home'],
+                                                                      datetime.now()), level=logging.INFO)
     main()
