@@ -54,9 +54,16 @@ echo 'add index template to elasticsearch'
 curl -XPUT 'http://localhost:9200/_template/honeyd' -H 'Content-Type: application/json' -d @$GARF_HOME/conf/log-template.json
 
 echo 'creating garf cronjob'
-virtualenv -p python3 $GARF_HOME/venv
+
+if [ ! -d "$GARF_HOME/venv" ]; then
+    virtualenv -p python3 $GARF_HOME/venv
+fi
+
 source $GARF_HOME/venv/bin/activate
+
 pip install -r $GARF_HOME/conf/requirements.txt
+
 cd $GARF_HOME/src
+
 python setup.py
 deactivate

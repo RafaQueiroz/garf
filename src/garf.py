@@ -24,7 +24,11 @@ def save_active_logs(elastic, logs=[]):
 
 
 def remove_expire_logs(elastic, logs=[]):
+    if not logs:
+        return
+
     for log in logs:
+        print('{}\n'.format(log))
         elastic.delete(index='active_logs', id=log['_id'])
 
 
@@ -33,12 +37,17 @@ def analyse_logs(elastic):
     #Cria o arquivo para remover as regras espiradas do iptables
     expire_logs = get_logs(elastic, index='active_logs', body=get_expired_logs_query_body(datetime.now()))
     export_rules_file(expire_logs, False)
-    remove_expire_logs(expire_logs)
+
+    remove_expire_logs(elastic, expire_logs)
 
     #Cria o arquivo contento as regras novas do iptables
     logs = group_by(elastic, ['source_ip', 'destination_port', 'protocol'], False,
                     body=get_group_by_body(datetime.now()))
-    filtered_logs = [log for log in logs if log['doc_count'] > int(config['app']['max_occurrence'])]
+
+    filtered_logs = []
+    if logs :
+        filtered_logs = [log for log in logs if log['doc_count'] > int(config['app']['max_occurrence'])]
+
     export_rules_file(filtered_logs)
 
     #Salva as regras novas
@@ -69,6 +78,7 @@ def get_logs(elastic, index='', body=''):
 
     for data in result['hits']['hits']:
         raw_log = data['_source']
+        print('{}\n'.format(raw_log))
         log = format_dict(raw_log, fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date'])
         logs.append(log)
 
@@ -105,7 +115,6 @@ def group_by(elastic, fields, include_missing, body={}):
     body['aggs'] = agg_spec
 
     response = elastic.search(body=body)
-    print(response)
     agg_result = response['aggregations'] if response else []
     return get_docs_from_agg_result(agg_result, fields, include_missing)
 
@@ -231,16 +240,16 @@ def main():
     es = Elasticsearch(verify_certs=True)
 
     if not es.ping():
-        logging.info("Nenhuma estância do Elasticsearch está ativa")
+        logging.info("Nenhuma estancia do Elasticsearch est ativa")
         return
 
     analyse_logs(es)
 
     logging.info('Removendo regras expiradas')
-    os.system('bash {}/script/drop_old_rules.sh'.format(config['app']['garf_home']))
+    os.system('bash {}/scripts/drop_old_rules.sh'.format(config['app']['garf_home']))
 
     logging.info('Adicionando novas regras')
-    os.system('bash {}/script/custom_rules.sh'.format(config['app']['garf_home']))
+    os.system('bash {}/scripts/custom_rules.sh'.format(config['app']['garf_home']))
 
 
 if __name__ == "__main__":

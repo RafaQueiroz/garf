@@ -11,7 +11,7 @@ def main():
         print('It is necessary to set the garf_home variable at the garf.ini file')
 
     # criar cron job para executar o garf
-    script_path = '{}/script/execute_garf.sh'.format(config['app']['garf_home'])
+    script_path = '{}/scripts/execute_garf.sh'.format(config['app']['garf_home'])
 
     try:
         root_cron = CronTab(user='root')
@@ -28,7 +28,7 @@ def main():
 
     if not garf_job:
         print('Job not founded. Creating a new one!')
-        garf_job = root_cron.new(command='python {}'.format(script_path), comment='garf')
+        garf_job = root_cron.new(command='bash {}'.format(script_path), comment='garf')
 
     print('Setting job execution period')
     garf_job.minute.every(int(config['app']['execution_interval']))
