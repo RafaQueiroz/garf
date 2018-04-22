@@ -4,3 +4,5 @@ scripts/custom_rules.sh
 scripts/drop_old_rules.sh
 log/garf.log
 .idea
+.vscode
+__pycache__

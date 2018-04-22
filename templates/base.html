@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GARF - </title>
+
+    <!-- Spectre css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/spectre-0.5.1/dist/spectre.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/spectre-0.5.1/dist/spectre-exp.min.css') }}">
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+</head>
+
+<body>
+    <header class="navbar">
+        <section class="navbar-section">
+            <a href="/configuracoes" class="btn btn-link">Configurações</a>
+            <a href="/regras-ativas" class="btn btn-link">Regras ativas</a>
+            <a href="/historico" class="btn btn-link">Histórico de Regras</a>
+        </section>
+        <section class="navbar-center">
+            <span class="logo">Garf</span>
+        </section>
+        <section class="navbar-section">
+            <a href="/" class="btn btn-link">GitHub</a>
+        </section>
+    </header>
+    <main class="content">
+        {% block body %} {% endblock %}
+    </main>
+
+    <footer>
+        <div class="columns">
+            <div class="col-8 col-mx-auto config-fields">
+                <p>Desenvolvido por <b>Rafael Queiroz</b></p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

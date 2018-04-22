@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block body %}
+
+<div class="container">
+    <div class="columns">
+        <div class="col-8 col-mx-auto">
+            <div class="section-name">
+                <h1>Configurações </h1>
+            </div>
+            <div class="columns">
+                <div class="col-8 col-mx-auto config-fields">
+                    <form class="form-horizontal" name="config-form">
+                        <div class="form-group">
+                            <div class="col-6 col-sm-12">
+                                <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
+                            </div>
+                            <div class="col-6 col-sm-12">
+                                <input class="form-input" type="text" id="input-example-1" >
+                            </div>
+                            <p class="description">
+                                Valor numérico. Intervalo de tempo em que o script
+                                que gera e atualiza as regras será executado. valor em minutos.
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-6 col-sm-12">
+                                <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
+                            </div>
+                            <div class="col-6 col-sm-12">
+                                <input class="form-input" type="text" id="input-example-1" >
+                            </div>
+                            <p class="description">
+                                Tempo de duração das regras. Em minutos.
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-6 col-sm-12">
+                                <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
+                            </div>
+                            <div class="col-6 col-sm-12">
+                                <input class="form-input" type="text" id="input-example-1" >
+                            </div>
+                            <p class="field-description">
+                                Número máximo de ocorrência de registro de acesso com o mesmo número de ip, porta e protocolo
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

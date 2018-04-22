@@ -1,0 +1,54 @@
+html{
+    font-family: 'Raleway', sans-serif;
+}
+
+.navbar{
+    height: 120px;
+    background-color: black;
+}
+
+.btn-link {
+    font-size: 1.6em;
+    color: antiquewhite !important;
+    font-weight: 300;
+}
+
+.navbar a:active,
+.navbar a:hover{
+    background-color: antiquewhite;
+    color: black !important;
+}
+
+.logo{
+    font-size: 3em;
+    font-weight: bold;
+    font-family: 'Bitter', serif;
+    text-transform: uppercase;
+}
+
+.section-name{
+    border-bottom: 1px solid #666666;
+    margin-top: 40px;
+}
+.section-name h1{
+    margin-bottom: 8px;
+}
+.field-name{
+    display: inline-block !important;
+}
+
+.content{
+    min-height: 800px;
+}
+
+.config-fields{
+    margin-top: 40px;
+}
+label{
+    font-size: 1.4em;
+    font-weight: bold;
+}
+.description{
+    display: block;
+    max-width: 350px;
+}
