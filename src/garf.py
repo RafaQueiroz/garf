@@ -28,7 +28,6 @@ def remove_expire_logs(elastic, logs=[]):
         return
 
     for log in logs:
-        print('{}\n'.format(log))
         elastic.delete(index='active_logs', id=log['_id'])
 
 
@@ -75,11 +74,15 @@ def get_logs(elastic, index='', body=''):
     if 'error' in result:
         logging.error('Erro ao executar a query. Motivo: {}'.format(result['error']['type']))
         return logs
+    
+    fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date']
+    
+    if index == 'active_logs':
+        fields.append('expires_in')
 
     for data in result['hits']['hits']:
         raw_log = data['_source']
-        print('{}\n'.format(raw_log))
-        log = format_dict(raw_log, fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date'])
+        log = format_dict(raw_log, fields=fields)
         logs.append(log)
 
     logging.info("{} documents processed!".format(len(logs)))
@@ -184,13 +187,8 @@ def add_to_history(source_file_path=''):
 
     rules_history = open('{}/rules_history-{:%Y-%m-%d}.log'.format(config['app']['log'], datetime.now()), 'a')
 
-    rules_history.write('# logging date: {:%Y-%m-%d %H:%M} \n'.format(datetime.now()))
-
     for line in current_file:
-        rules_history.write('# {}'.format(line))
-
-    rules_history.write('\n\n\n')
-
+        rules_history.write(' {}'.format(line))
 
 def format_dict(raw_log={}, fields=[]):
 
@@ -199,6 +197,10 @@ def format_dict(raw_log={}, fields=[]):
     for field in fields:
         if field in raw_log.keys():
             log[field] = raw_log[field]
+
+    if 'expires_in' in log.keys():
+        date = datetime.strptime(log['expires_in'], '%Y-%m-%dT%H:%M:%S.%f')
+        log['expires_in'] = date.strftime('%d/%m/%Y %H:%M')
 
     return log
 
@@ -231,6 +233,27 @@ def get_group_by_body(date):
     }
     return body
 
+
+def get_rules_history():
+    rules = []
+
+    if not os.path.isdir(config['app']['log']):
+        return rules
+
+    currentDate = datetime.now()
+    file_path = '{}/rules_history-{:%Y-%m-%d}.log'.format(config['app']['log'], currentDate)
+    try:
+        rules_file = open(file_path, 'r')
+    except IOError:
+        print('File not found')
+        return rules
+
+    for line in rules_file:
+        if not line or '#!bin/bash' in line:
+            continue
+        rules.append(line)
+
+    return rules
 
 config = ConfigParser()
 config.read('garf.ini')

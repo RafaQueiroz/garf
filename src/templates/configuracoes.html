@@ -8,13 +8,13 @@
             </div>
             <div class="columns">
                 <div class="col-8 col-mx-auto config-fields">
-                    <form class="form-horizontal" name="config-form">
+                    <form class="form-horizontal" action="/configuracoes" method="POST">
                         <div class="form-group">
                             <div class="col-6 col-sm-12">
                                 <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
                             </div>
                             <div class="col-6 col-sm-12">
-                                <input class="form-input" type="text" id="input-example-1" >
+                                <input class="form-input" type="text" name="execution_interval" value="{{ context.config.execution_interval }}">
                             </div>
                             <p class="description">
                                 Valor numérico. Intervalo de tempo em que o script
@@ -26,7 +26,7 @@
                                 <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
                             </div>
                             <div class="col-6 col-sm-12">
-                                <input class="form-input" type="text" id="input-example-1" >
+                                <input class="form-input" type="text" name="rule_dureation" value="{{ context.config.rule_dureation }}">
                             </div>
                             <p class="description">
                                 Tempo de duração das regras. Em minutos.
@@ -37,12 +37,13 @@
                                 <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
                             </div>
                             <div class="col-6 col-sm-12">
-                                <input class="form-input" type="text" id="input-example-1" >
+                                <input class="form-input" type="text" name="max_occurrence" value="{{ context.config.max_occurrence }}">
                             </div>
-                            <p class="field-description">
+                            <p class="description">
                                 Número máximo de ocorrência de registro de acesso com o mesmo número de ip, porta e protocolo
                             </p>
                         </div>
+                        <button class="btn btn-success" type="submit" style="font-size: 1.2em">Salvar</button>
                     </form>
                 </div>
             </div>

@@ -6,9 +6,13 @@
             <div class="section-name">
                 <h1>Histórico </h1>
             </div>
-            <div class="columns">
-                <div class="col-8 col-mx-auto config-fields">
+            <div class="columns board">
+                <div class="col-10 col-mx-auto config-fields">
                    <!-- Histórico de regras -->
+                    {% for rule in context.rules %}
+                    <p style="max-width: 730px;">{{ rule }}</p>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>

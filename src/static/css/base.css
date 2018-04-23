@@ -1,7 +1,9 @@
 html{
     font-family: 'Raleway', sans-serif;
 }
-
+body{
+    background-color: antiquewhite;
+}
 .navbar{
     height: 120px;
     background-color: black;
@@ -38,7 +40,7 @@ html{
 }
 
 .content{
-    min-height: 800px;
+    min-height: 700px;
 }
 
 .config-fields{
@@ -51,4 +53,14 @@ label{
 .description{
     display: block;
     max-width: 350px;
+}
+.rules-table{
+    font-size: 1.2em;   
+}
+.icon-wrapper{
+    background-color: antiquewhite;
+}
+.board{
+    max-height: 500px;
+    overflow-y: scroll;
 }

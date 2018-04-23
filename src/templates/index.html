@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block body %}
+
+<div class="container">
+    <div class="columns">
+        <div class="col-8 col-mx-auto">
+            <div class="section-name">
+                <h1>Descrição </h1>
+            </div>
+            <div class="columns">
+                <div class="col-10 col-mx-auto config-fields">
+                  <p>
+                      GARF é um gerador automatizado de regras de firewall. Este baseia-se
+                      em dados coletados por servidores Honeypot e configurações definidas pelo
+                      usuário para gerar as regras que serão aplicadass no firewall. A ferramenta 
+                      usa as seguintes tecnologias:
+                  </p>
+                  <ul>
+                      <li>FileBeat</li>
+                      <li>Logstash</li>
+                      <li>Elasticsearch</li>
+                      <li>Flask</li>
+                      <li>Spectre css</li>
+                  </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
