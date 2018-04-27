@@ -2,7 +2,7 @@ html{
     font-family: 'Raleway', sans-serif;
 }
 body{
-    background-color: antiquewhite;
+    background-color: #f7f7f7;
 }
 .navbar{
     height: 120px;
@@ -17,7 +17,7 @@ body{
 
 .navbar a:active,
 .navbar a:hover{
-    background-color: antiquewhite;
+    background-color: #f7f7f7;
     color: black !important;
 }
 
@@ -58,9 +58,17 @@ label{
     font-size: 1.2em;   
 }
 .icon-wrapper{
-    background-color: antiquewhite;
+    background-color: #f7f7f7;
 }
 .board{
     max-height: 500px;
     overflow-y: scroll;
+}
+
+.tabble tr{
+    background-color: #e2e2e2;
+}
+
+.table td, .table th {
+    border-bottom: .05rem solid #aaacbd;
 }

@@ -14,6 +14,13 @@ def save_active_logs(elastic, logs=[]):
     rule_duration = int(config['app']['rule_dureation'])
 
     for log in logs:
+
+        log_list = get_logs(elastic, index='active_logs', body=check_if_exists(log))
+
+        if log_list:
+            logging.info('Regra ja salva')
+            continue
+
         document = {
             'expires_in': datetime.now() + timedelta(seconds=rule_duration),
             'source_ip': log['source_ip'],
@@ -25,37 +32,45 @@ def save_active_logs(elastic, logs=[]):
 
 def remove_expire_logs(elastic, logs=[]):
     if not logs:
+        logging.info('Any logs to be removed')
         return
 
+    logging.info('Removing {} logs'.format(str(len(logs))))
     for log in logs:
-        elastic.delete(index='active_logs', id=log['_id'])
+        elastic.delete(index='active_logs', doc_type='doc', id=log['_id'])
 
 
 def analyse_logs(elastic):
 
     #Cria o arquivo para remover as regras espiradas do iptables
+    logging.info('### RETRIEVING OLD RULES')
     expire_logs = get_logs(elastic, index='active_logs', body=get_expired_logs_query_body(datetime.now()))
     export_rules_file(expire_logs, False)
 
+    logging.info('### REMOVING OLD RULES')
     remove_expire_logs(elastic, expire_logs)
 
+    logging.info('### FETCHING DATA TO NEW RULES')
     #Cria o arquivo contento as regras novas do iptables
     logs = group_by(elastic, ['source_ip', 'destination_port', 'protocol'], False,
                     body=get_group_by_body(datetime.now()))
 
     filtered_logs = []
     if logs :
+        logging.info('Raw data: {}'.format(str(len(logs))))
         filtered_logs = [log for log in logs if log['doc_count'] > int(config['app']['max_occurrence'])]
 
+    logging.info('### EXPORTING NEW RULES FILE')
     export_rules_file(filtered_logs)
 
     #Salva as regras novas
+    logging.info('### SAVING ACTIVE RULES INTO THE DATABASE')
     save_active_logs(elastic, filtered_logs)
 
     return True
 
 
-def get_logs(elastic, index='', body=''):
+def get_logs(elastic, index='', body='', fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date', 'expires_in']):
     # Fetch data from elasticsearch
 
     logs = []
@@ -74,14 +89,11 @@ def get_logs(elastic, index='', body=''):
     if 'error' in result:
         logging.error('Erro ao executar a query. Motivo: {}'.format(result['error']['type']))
         return logs
-    
-    fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date']
-    
-    if index == 'active_logs':
-        fields.append('expires_in')
 
     for data in result['hits']['hits']:
         raw_log = data['_source']
+        raw_log['_id'] = data['_id']
+
         log = format_dict(raw_log, fields=fields)
         logs.append(log)
 
@@ -151,17 +163,27 @@ def get_docs_from_agg_result(agg_result, fields, include_missing):
 def create_comand(log, add=True):
 
     action = 'A' if add else 'D'
-    return 'iptables -{action} INPUT -p {protocol} --dport {port} -s {ip} -j DROP'\
+    rule = 'iptables -{action} INPUT -p {protocol} --dport {port} -s {ip} -j DROP'\
          .format(action=action, protocol=log['protocol'], port=log['destination_port'], ip=log['source_ip'])
+
+    check_rule = '-A INPUT -s {ip}/32 -p {protocol} -m {protocol} --dport {port} -j DROP'\
+         .format(action=action, protocol=log['protocol'], port=log['destination_port'], ip=log['source_ip'])
+
+    if add:     
+        command='if [[ $(iptables-save | grep -- "{check_rule}" 2> /dev/null) = "" ]]; then\n {rule} \nfi\n'.format(check_rule=check_rule, rule=rule)
+    else:
+        command='if [[ $(iptables-save | grep -- "{check_rule}" 2> /dev/null) != "" ]]; then\n {rule} \nfi\n'.format(check_rule=check_rule, rule=rule)
+    return command
 
 
 def export_rules_file(logs=[], add=True):
 
     file_path = '{}/scripts/{}'.format(config['app']['garf_home'], ('custom_rules.sh' if add else 'drop_old_rules.sh'))
 
+    logging.info('Exporting files to {}'.format(file_path))
     if os.path.isfile(file_path) and add:
-        logging.info('Founded old rules file. Adding it to the history')
         add_to_history(file_path)
+        logging.info('Founded old rules file. Adding it to the history')
 
     logging.info("Opening or creating file to deploy the rules")
     rules_file = open(file_path, 'w+')
@@ -171,7 +193,6 @@ def export_rules_file(logs=[], add=True):
     try:
         for log in logs:
             rules_file.write(create_comand(log, add))
-            rules_file.write("\n    ")
     except Exception:
         logging.error("There was an error during the process of writing in the rules file")
     finally:
@@ -184,8 +205,10 @@ def add_to_history(source_file_path=''):
 
     if not os.path.isdir(config['app']['log']):
         os.mkdir(config['app']['log'])
-
-    rules_history = open('{}/rules_history-{:%Y-%m-%d}.log'.format(config['app']['log'], datetime.now()), 'a')
+    
+    file_path = '{}/rules_history-{:%Y-%m-%d}.log'.format(config['app']['log'], datetime.now())
+    logging.info('saving rules into the history: {}'.format(file_path))
+    rules_history = open(file_path, 'a+')
 
     for line in current_file:
         rules_history.write(' {}'.format(line))
@@ -234,6 +257,26 @@ def get_group_by_body(date):
     return body
 
 
+def check_if_exists(log):
+    body = {
+        "query": {
+            "constant_score" : {
+                "filter" : {
+                    "bool" : {
+                        "must" : [
+                            { "term" : { "source_ip" : log['source_ip'] } }, 
+                            { "term" : { "protocol" : log['protocol'] } },
+                            { "term" : { "destination_port" : log['destination_port'] } }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+
+    return body
+
+
 def get_rules_history():
     rules = []
 
@@ -249,7 +292,7 @@ def get_rules_history():
         return rules
 
     for line in rules_file:
-        if not line or '#!bin/bash' in line:
+        if not line or '#!/bin/bash' in line:
             continue
         rules.append(line)
 
@@ -257,6 +300,17 @@ def get_rules_history():
 
 config = ConfigParser()
 config.read('garf.ini')
+
+def delete_rule(rule):
+
+    if not rule:
+        logging.info('An Empty rule was informed')
+        return
+    
+    logging.info('removing {} manually'.format(rule))
+    rule = rule.replace('-A', '-D')
+
+    os.system('{}'.format(rule))
 
 
 def main():

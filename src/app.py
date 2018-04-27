@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from configparser import ConfigParser
 from garf import get_logs, get_rules_history
+from garf import delete_rule
 from elasticsearch import Elasticsearch
+import os
 
 app = Flask(__name__)
 es = Elasticsearch(verify_certs=True)
@@ -27,6 +29,8 @@ def configuracoes():
 
         with open('garf.ini', 'wb') as configfile:
             config.write(configfile)
+
+        os.system('python3 setup.py')
             
     context= {
         'title' : 'Configuracoes',
@@ -62,6 +66,16 @@ def historico():
     }
 
     return render_template('historico.html', context=context)
+
+@app.route("/remove-rule", methods=['POST'])
+def remove_rule():
+
+    if request.method == 'POST':
+        rule = request.form['rule']
+        app.logger.info('rule: {}'.format(rule))
+        delete_rule(rule)
+
+    return redirect('/regras-ativas', code=302)
 
 
 if __name__ == "__main__":

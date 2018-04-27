@@ -9,7 +9,7 @@
             <div class="columns">
                 <div class="col-11 col-mx-auto config-fields board">
                     <!-- Tabela de regras -->
-                    <table class="table table-striped table-hover rules-table" >
+                    <table class="table table-striped table-hover rules-table" id="rules-table">
                         <thead>
                             <tr>
                                 <th>Rule</th>
@@ -20,17 +20,22 @@
                         <tbody>
                             {% for rule in context.regras %}
                             <tr>
-                                <td>iptables -A INPUT -p {{ rule.protocol }} --dport {{ rule.destination_port }} -s {{rule.source_ip}} -j DROP'</td>
+                                <td>iptables -A INPUT -p {{ rule.protocol }} --dport {{ rule.destination_port }} -s {{rule.source_ip}} -j DROP</td>
                                 <td>{{ rule.expires_in }}</td>
-                                <td><a> Remover </a></td>
+                                <td><button class="btn btn-error" onclick="remove({{loop.index}} )"> Remover </button></td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+
+                <form action="/remove-rule" style="display: none" id="remove-rule" method="POST">
+                    <input type="text" name="rule" id="rule" value="">
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script src="{{ url_for('static', filename='scripts/regras-ativas.js') }}"></script>
 
 {% endblock %}
