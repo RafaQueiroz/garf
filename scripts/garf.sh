@@ -1,4 +1,5 @@
-#!/bin/sh"
+#!/bin/bash
+
 GARF_HOME='/home/rafael/garf'
 source $GARF_HOME/venv/bin/activate
 cd $GARF_HOME/src/

@@ -1,5 +1,8 @@
+#!/home/rafael/garf/venv/bin/python
+
 import logging
 import os
+from crontab import CronTab
 import iptc
 
 from elasticsearch import Elasticsearch, NotFoundError
@@ -282,49 +285,39 @@ def check_if_exists(log):
 
 
 def get_history(elastic):
-    logs = get_logs(elastic, index='history', body=get_by_date_body(datetime.now()))
-    return logs
+    if not elastic.indices.exists(index='history'):
+        return []
 
-
-def delete_rule(rule):
-    # TODO: usar python-iptables 
-    if not rule:
-        logging.info('An Empty rule was informed')
-        return
-    
-    logging.info('removing {} manually'.format(rule))
-    rule = rule.replace('-A', '-D')
-
-    os.system('{}'.format(rule))
-
-config = ConfigParser()
-config.read('garf.ini')
+    return get_logs(elastic, index='history', body=get_by_date_body(datetime.now()))
 
 def main():
     elastic = Elasticsearch(verify_certs=True)
-
-    logging.info('### REMOVENDO REGRAS EXPIRADAS') 
+    logging.info('----COMEÇANDO A EXECUTAR')
+    logging.info('REMOVENDO REGRAS EXPIRADAS') 
     remove_expire_rules()
 
-    logging.info('### BUSCANDO E AGRUPANDO LOGS') 
+    logging.info('BUSCANDO E AGRUPANDO LOGS') 
     logs = group_by(elastic, ['source_ip', 'destination_port', 'protocol'], False,
                     body=get_group_by_body(datetime.now()))
 
-    logging.info('### FILTRANDO LOGS PARA GERAR AS REGRAS') 
+    logging.info('FILTRANDO LOGS PARA GERAR AS REGRAS') 
     filtered_logs = []
     if logs :
         logging.info('filtrando {} logs'.format(str(len(logs))))
         filtered_logs = [log for log in logs if log['doc_count'] > int(config['app']['max_occurrence'])]
 
-    logging.info('### INSERINDO {} NOVA(S) REGRA(S)'.format(str(len(filtered_logs))))
+    logging.info('INSERINDO {} NOVA(S) REGRA(S)'.format(str(len(filtered_logs))))
     rules = insert_rules(filtered_logs)
 
-    logging.info('### ADICIONANDO {} NOVA(S) REGRA(S) PARA O HISTORICO'.format(str(len(rules))))
+    logging.info('ADICIONANDO {} NOVA(S) REGRA(S) PARA O HISTORICO'.format(str(len(rules))))
     add_to_history(elastic, rules)
 
 
 if __name__ == "__main__":
-
+    
+    config = ConfigParser()
+    config.read('/home/rafael/garf/src/garf.ini')
+        
     if not os.path.isdir(config['app']['log']):
         os.mkdir(config['app']['log'])
 

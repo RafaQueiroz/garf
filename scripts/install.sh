@@ -61,7 +61,7 @@ fi
 
 source $GARF_HOME/venv/bin/activate
 
-pip install -r $GARF_HOME/conf/requirements.txt
+pip install -r $GARF_HOME/requirements.txt
 
 cd $GARF_HOME/src
 

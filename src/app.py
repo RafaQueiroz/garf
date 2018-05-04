@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from configparser import ConfigParser
-from garf import get_logs, get_rules_history
-from garf import delete_rule
+from garf import get_history, get_input_rules
 from elasticsearch import Elasticsearch
 import os
 
@@ -46,7 +45,7 @@ def configuracoes():
 
 @app.route("/regras-ativas")
 def regras_ativas():
-    regras_ativas = get_logs(es, index='active_logs')
+    regras_ativas = get_input_rules()
 
     context= {
         'title' : 'Regras Ativas',
@@ -59,7 +58,7 @@ def regras_ativas():
 @app.route("/historico")
 def historico():
 
-    rules = get_rules_history()
+    rules = get_history(es)
     context= {
         'title' : 'Historico',
         'rules' : rules
@@ -72,8 +71,7 @@ def remove_rule():
 
     if request.method == 'POST':
         rule = request.form['rule']
-        app.logger.info('rule: {}'.format(rule))
-        delete_rule(rule)
+        # delete_rule(rule)
 
     return redirect('/regras-ativas', code=302)
 

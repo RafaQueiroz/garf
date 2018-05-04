@@ -11,7 +11,7 @@ def main():
         print('It is necessary to set the garf_home variable at the garf.ini file')
 
     # criar cron job para executar o garf
-    script_path = '{}/scripts/execute_garf.sh'.format(config['app']['garf_home'])
+    script_path = '{}/scripts/garf.sh &>> /var/log/garf-cron.log'.format(config['app']['garf_home'])
 
     try:
         root_cron = CronTab(user='root')
