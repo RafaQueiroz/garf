@@ -15,6 +15,9 @@
     <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
 
+    <!-- jquery ui -->
+    <link rel="stylesheet" href="{{url_for('static', filename='scripts/jquery-ui-1.12.1/jquery-ui.min.css')}}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 
 </head>
@@ -40,10 +43,17 @@
     <footer>
         <div class="columns">
             <div class="col-8 col-mx-auto config-fields">
-                <p>Desenvolvido por <b>Rafael Queiroz</b></p>
+                <p>Desenvolvido por
+                    <b>Rafael Queiroz</b>
+                </p>
             </div>
         </div>
     </footer>
 </body>
+
+<script src="{{url_for('static', filename='scripts/jquery-3.3.1.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/jquery-ui-1.12.1/jquery-ui.min.js')}}"></script>
+<script src="{{url_for('static', filename='scripts/ui.datepicker-pt-BR.js')}}"></script>
+{% block scripts %}{% endblock%}
 
 </html>

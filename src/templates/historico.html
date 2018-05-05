@@ -1,22 +1,41 @@
 {% extends "base.html" %} {% block body %}
-
 <div class="container">
     <div class="columns">
-        <div class="col-8 col-mx-auto">
+        <div class="col-8 col-mx-auto config-fields">
             <div class="section-name">
                 <h1>Histórico </h1>
             </div>
-            <div class="columns board">
-                <div class="col-10 col-mx-auto config-fields">
-                   <!-- Histórico de regras -->
-                    {% for rule in context.rules %}
-                    <p style="max-width: 730px;">{{ rule }}</p>
-                    {% endfor %}
-
+            <div class="column gapless">
+                <div class="col-5">
+                    <p>Inicio:
+                        <input type="text" id="data-inicio" class="datepicker">
+                    </p>
+                </div>
+                <div class="col-5">
+                    <p>Fim:
+                        <input type="text" id="data-fim" class="datepicker">
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+    <div class="columns">
+        <div class="col-8 col-mx-auto board">
+            <!-- Tabela de regras -->
+            <table class="table table-striped table-hover rules-table" id="historico">
+                <thead>
+                    <tr>
+                        <th>Regra</th>
+                        <th>Criada em</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-{% endblock %}
+{% endblock %} 
+{% block scripts %}
+<script src="{{url_for('static', filename='scripts/historico.js')}}"></script> {% endblock%}

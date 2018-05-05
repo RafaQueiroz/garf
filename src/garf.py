@@ -76,11 +76,13 @@ def rule_to_dict(rule):
         elif match.name == 'comment':
             raw_date = match.comment  
 
+    date = datetime.strptime(raw_date, '%Y-%m-%d %H:%M')
+
     rule = {
         'source_ip' : rule.src,
         'destination_port' : dport,
         'protocol' : rule.protocol,
-        'expires_in' : datetime.strptime(raw_date, '%Y-%m-%d %H:%M')
+        'expires_in' : date.strftime('%d/%m/%Y %H:%M')
     }
 
     return rule
@@ -90,15 +92,31 @@ def find_rule(log):
 
     if not log:
         return None
-
+    
     for rule in rules:
-        if rule['source_ip'] == log['source_ip'] and\
-             rule['destination_port'] == log['destination_port'] and\
-             rule['protocol'] == log['protocol']:
+        print('Regra: {}'.format(rule))
+        if log['source_ip'] in rule['source_ip'] and\
+             log['destination_port'] in rule['destination_port'] and\
+             log['protocol'] in rule['protocol']:
             return rule
         
     return None
 
+def delete_rule(log):
+
+    filter_chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "INPUT")
+
+    counter = 0
+    for r in filter_chain.rules:
+        rule = rule_to_dict(r)
+        if log['source_ip'] in rule['source_ip'] and\
+             log['destination_port'] in rule['destination_port'] and\
+             log['protocol'] in rule['protocol']:
+             
+            filter_chain.delete_rule(r)
+            return True
+
+    return False
 
 def add_to_history(elastic, rules=[]):
     if not rules:
@@ -107,6 +125,7 @@ def add_to_history(elastic, rules=[]):
 
     for rule in rules:
         document = {
+            'created_in' : datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
             'expires_in': rule['expires_in'],
             'source_ip': rule['source_ip'],
             'destination_port': rule['destination_port'],
@@ -131,7 +150,7 @@ def remove_expire_rules():
     logging.info('{} regra(s) foram removidas'.format(str(counter)))
 
 
-def get_logs(elastic, index='', body='', fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date', 'expires_in']):
+def get_logs(elastic, index='', body='', fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date', 'expires_in', 'created_in']):
     # Fetch data from elasticsearch
 
     logs = []
@@ -228,19 +247,20 @@ def format_dict(raw_log={}, fields=[]):
         if field in raw_log.keys():
             log[field] = raw_log[field]
 
-    if 'expires_in' in log.keys():
-        date = datetime.strptime(log['expires_in'], '%Y-%m-%dT%H:%M:%S.%f')
-        log['expires_in'] = date.strftime('%d/%m/%Y %H:%M')
+    if 'created_in' in log.keys():
+        date = datetime.strptime(log['created_in'], '%Y-%m-%dT%H:%M:%S')
+        log['created_in'] = date.strftime('%d/%m/%Y %H:%M')
 
     return log
 
 
-def get_by_date_body(date):
+def get_by_date_body(inicio, fim):
     body={
         'query': {
             'range': {
-                'expires_in': {
-                    'lt': date.isoformat()
+                'created_in': {
+                    'gte': inicio,
+                    'lte': fim
                 }
             }
         }
@@ -284,11 +304,14 @@ def check_if_exists(log):
     return body
 
 
-def get_history(elastic):
+def get_history(elastic, raw_inicio, raw_fim):
     if not elastic.indices.exists(index='history'):
         return []
 
-    return get_logs(elastic, index='history', body=get_by_date_body(datetime.now()))
+    inicio = datetime.strptime(raw_inicio, '%d/%m/%Y')
+    fim = datetime.strptime(raw_fim, '%d/%m/%Y')
+
+    return get_logs(elastic, index='history', body=get_by_date_body(inicio, fim))
 
 def main():
     elastic = Elasticsearch(verify_certs=True)

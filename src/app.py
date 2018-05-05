@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 from configparser import ConfigParser
-from garf import get_history, get_input_rules
+from garf import get_history, get_input_rules, delete_rule
 from elasticsearch import Elasticsearch
 import os
+import json
+
 
 app = Flask(__name__)
 es = Elasticsearch(verify_certs=True)
@@ -55,13 +57,19 @@ def regras_ativas():
     return render_template('regras-ativas.html', context=context)
     
 
-@app.route("/historico")
+@app.route("/historico", methods=['POST', 'GET'])
 def historico():
 
-    rules = get_history(es)
+    rules = []
+    if request.method == 'POST':
+        data_inicio = request.form['inicio']
+        data_fim = request.form['fim']
+        rules = get_history(es, data_inicio, data_fim)
+
+        return jsonify(rules)
+   
     context= {
-        'title' : 'Historico',
-        'rules' : rules
+        'title' : 'Historico'
     }
 
     return render_template('historico.html', context=context)
@@ -69,11 +77,11 @@ def historico():
 @app.route("/remove-rule", methods=['POST'])
 def remove_rule():
 
-    if request.method == 'POST':
-        rule = request.form['rule']
-        # delete_rule(rule)
+    raw_rule = request.form['rule']
+    rule = json.loads(raw_rule)
+    delete_rule(rule)
 
-    return redirect('/regras-ativas', code=302)
+    return jsonify('Regra removida com sucesso') 
 
 
 if __name__ == "__main__":
