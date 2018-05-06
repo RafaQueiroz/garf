@@ -126,7 +126,6 @@ def add_to_history(elastic, rules=[]):
     for rule in rules:
         document = {
             'created_in' : datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
-            'expires_in': rule['expires_in'],
             'source_ip': rule['source_ip'],
             'destination_port': rule['destination_port'],
             'protocol': rule['protocol']

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 GARF_HOME='/home/rafael/garf'
-source $GARF_HOME/venv/bin/activate
+PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
 cd $GARF_HOME/src/
-python garf.py
-deactivate
+$GARF_HOME/venv/bin/python garf.py
