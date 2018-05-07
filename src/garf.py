@@ -43,12 +43,17 @@ def format_rule(log):
 
     rule = iptc.Rule()                                     
     rule.src = log['source_ip']
-    rule.protocol = log['protocol']                      
-    protocol_match = iptc.Match(rule, log['protocol'])   
-    protocol_match.dport = log['destination_port']                      
+
+    if 'protocolo' in log.keys():
+        rule.protocol = log['protocol']
+        
+        if 'destination_port' in log.keys():                
+            protocol_match = iptc.Match(rule, log['protocol'])   
+            protocol_match.dport = log['destination_port']
+            rule.add_match(protocol_match)                      
+        
     comment_match = iptc.Match(rule, 'comment')            
     comment_match.comment= datetime.strftime(expires_in, '%Y-%m-%d %H:%M')
-    rule.add_match(protocol_match)
     rule.add_match(comment_match) 
     target = iptc.Target(rule, 'DROP')
     rule.target = target
