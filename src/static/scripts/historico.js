@@ -44,9 +44,21 @@ $(document).ready(function(){
 });
 
 function row(rule){
+
+
+    var str_rule = 'iptables -A INPUT ';
+    
+    if(rule.protocol != undefined && rule.protocol != undefined)
+        str_rule += '-p '+rule.protocol;
+
+    if(rule.destination_port != undefined && rule.destination_port != "") 
+        str_rule += ' --dport ' + rule.destination_port;
+
+    str_rule += ' -s '+ rule.source_ip +' -j DROP';
+    
     return ''+
         '<tr> ' +
-        '   <td>iptables -A INPUT -p '+rule.protocol+' --dport ' + rule.destination_port + ' -s '+ rule.source_ip +' -j DROP </td>' +
+        '   <td>'+str_rule+'</td>' +
         '   <td>'+rule.created_in+'</td>' +
         '</tr> ';
 }

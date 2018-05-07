@@ -4,22 +4,21 @@
         <div class="col-8 col-mx-auto config-fields">
             <div class="section-name">
                 <h1>Histórico </h1>
-            </div>
-            <div class="column gapless">
-                <div class="col-5">
-                    <p>Inicio:
-                        <input type="text" id="data-inicio" class="datepicker">
-                    </p>
-                </div>
-                <div class="col-5">
-                    <p>Fim:
-                        <input type="text" id="data-fim" class="datepicker">
-                    </p>
+                <div class="interval">
+                    <input type="text" id="data-inicio" class="datepicker">
+                    <span> até </span>
+                    <input type="text" id="data-fim" class="datepicker"> 
                 </div>
             </div>
         </div>
     </div>
-   
+
+    <!-- <div class="column">
+        <div class="col-8 col-mx-auto">
+            
+        </div>
+    </div> -->
+
     <div class="columns">
         <div class="col-8 col-mx-auto board">
             <!-- Tabela de regras -->
@@ -38,7 +37,7 @@
 </div>
 
 {% endblock %} 
-{% block scripts %}
 
+{% block scripts %}
 <script src="{{url_for('static', filename='scripts/historico.js')}}"></script> 
 {% endblock%}

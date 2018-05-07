@@ -14,13 +14,22 @@
                             <tr>
                                 <th>Regra</th>
                                 <th>Expira Em</th>
-                                <th>Actions</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for rule in context.regras %}
                             <tr>
-                                <td>iptables -A INPUT -p {{ rule.protocol }} --dport {{ rule.destination_port }} -s {{rule.source_ip}} -j DROP</td>
+                                <td>iptables -A INPUT
+                                        {% if rule.protocol != '' %}
+                                            -p {{ rule.protocol }} 
+                                        {% endif %}
+
+                                        {% if rule.destination_port  != '' %}
+                                            --dport {{ rule.destination_port }} 
+                                        {% endif %}
+                                        
+                                        -s {{rule.source_ip}} -j DROP</td>
                                 <td>{{ rule.expires_in }}</td>
                                 <td><button class="btn btn-error" onclick="remove({{rule}})"> Remover </button></td>
                             </tr>

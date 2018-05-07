@@ -20,7 +20,6 @@ def insert_rules(logs=[]):
         return rules
 
     for log in logs:
-
         input_rule = find_rule(log)
         if input_rule:
             logging.info('Ja Existe uma regra ativa: {}'.format(log))
@@ -44,7 +43,9 @@ def format_rule(log):
     rule = iptc.Rule()                                     
     rule.src = log['source_ip']
 
-    if 'protocolo' in log.keys():
+    print(log.keys())
+
+    if 'protocol' in log.keys():
         rule.protocol = log['protocol']
         
         if 'destination_port' in log.keys():                
@@ -73,10 +74,11 @@ def rule_to_dict(rule):
     if not rule:
         return {}
 
-    dport=''
-    raw_date=''                     
+    dport = ''
+    raw_date = ''
+    protocol = rule.protocol if rule.protocol else ''                     
     for match in rule.matches:
-        if match.name == rule.protocol:
+        if rule.protocol and match.name == rule.protocol:
             dport = match.dport
         elif match.name == 'comment':
             raw_date = match.comment  
@@ -86,7 +88,7 @@ def rule_to_dict(rule):
     rule = {
         'source_ip' : rule.src,
         'destination_port' : dport,
-        'protocol' : rule.protocol,
+        'protocol' : protocol,
         'expires_in' : date.strftime('%d/%m/%Y %H:%M')
     }
 
@@ -97,13 +99,15 @@ def find_rule(log):
 
     if not log:
         return None
-    
+
     for rule in rules:
         print('Regra: {}'.format(rule))
-        if log['source_ip'] in rule['source_ip'] and\
-             log['destination_port'] in rule['destination_port'] and\
-             log['protocol'] in rule['protocol']:
-            return rule
+        if log['source_ip'] in rule['source_ip'] :
+            if config['app']['only_ip'] == 'True':
+                return rule
+            elif log['destination_port'] == rule['destination_port'] and\
+                log['protocol'] == rule['protocol']:
+                return rule
         
     return None
 
@@ -113,12 +117,14 @@ def delete_rule(log):
 
     for r in filter_chain.rules:
         rule = rule_to_dict(r)
-        if log['source_ip'] in rule['source_ip'] and\
-             log['destination_port'] in rule['destination_port'] and\
-             log['protocol'] in rule['protocol']:
-             
-            filter_chain.delete_rule(r)
-            return True
+        if log['source_ip'] in rule['source_ip']:
+            if log['source_ip'] in rule['source_ip'] :
+                filter_chain.delete_rule(r)
+                return True
+            elif log['destination_port'] == rule['destination_port'] and\
+             log['protocol'] == rule['protocol']:
+                filter_chain.delete_rule(r)
+                return True
 
     return False
 
@@ -328,12 +334,12 @@ def main():
 
     logging.info('BUSCANDO E AGRUPANDO LOGS') 
 
-    if config['app']['only_in'] == 'True':
+    if config['app']['only_ip'] == 'True':
         group_list = ['source_ip']
     else:
         group_list = ['source_ip', 'destination_port', 'protocol']
 
-
+    print(group_list)
     logs = group_by(elastic, group_list, False,
                     body=get_group_by_body(datetime.now()))
 
