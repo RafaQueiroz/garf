@@ -17,13 +17,12 @@
                                 <input class="form-input" type="text" name="execution_interval" value="{{ context.config.execution_interval }}">
                             </div>
                             <p class="description">
-                                Valor numérico. Intervalo de tempo em que o script
-                                que gera e atualiza as regras será executado. valor em minutos.
+                                Valor numérico. Intervalo de tempo em que o script que gera e atualiza as regras será executado. valor em minutos.
                             </p>
                         </div>
                         <div class="form-group">
                             <div class="col-6 col-sm-12">
-                                <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
+                                <label class="form-label" for="input-example-1">Duração das regras:</label>
                             </div>
                             <div class="col-6 col-sm-12">
                                 <input class="form-input" type="text" name="rule_dureation" value="{{ context.config.rule_dureation }}">
@@ -34,7 +33,19 @@
                         </div>
                         <div class="form-group">
                             <div class="col-6 col-sm-12">
-                                <label class="form-label" for="input-example-1">Intervalo entre execuções:</label>
+                                <label class="form-label" for="input-example-1">Verificar apenas por ip:</label>
+                            </div>
+                            <div class="col-6 col-sm-12">
+                                <input class="form-" type="checkbox" name="only_ip" {% if context.config.only_ip == 'True' %} checked {% endif %}>
+                            </div>
+                            <p class="description">
+                                Quando não marcarda esta opção, o sistema agrupa os logs por ip de origem, porta e protocolo. Ao marcar essa opção, os dados
+                                serão agrupados apenas pelo ip.
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-6 col-sm-12">
+                                <label class="form-label" for="input-example-1">Ocorrências:</label>
                             </div>
                             <div class="col-6 col-sm-12">
                                 <input class="form-input" type="text" name="max_occurrence" value="{{ context.config.max_occurrence }}">

@@ -322,7 +322,14 @@ def main():
     remove_expire_rules()
 
     logging.info('BUSCANDO E AGRUPANDO LOGS') 
-    logs = group_by(elastic, ['source_ip', 'destination_port', 'protocol'], False,
+
+    if config['app']['only_in'] == 'True':
+        group_list = ['source_ip']
+    else:
+        group_list = ['source_ip', 'destination_port', 'protocol']
+
+
+    logs = group_by(elastic, group_list, False,
                     body=get_group_by_body(datetime.now()))
 
     logging.info('FILTRANDO LOGS PARA GERAR AS REGRAS') 

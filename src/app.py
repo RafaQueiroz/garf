@@ -20,7 +20,7 @@ def index():
 
 @app.route("/configuracoes", methods=['GET', 'POST'])
 def configuracoes():
-
+    print('entrou')
     config = ConfigParser()
     config.read('/home/rafael/garf/src/garf.ini')
     if request.method == 'POST':
@@ -28,8 +28,11 @@ def configuracoes():
         config.set('app', 'execution_interval', request.form['execution_interval'])
         config.set('app', 'rule_dureation', request.form['rule_dureation'])
         config.set('app', 'max_occurrence', request.form['max_occurrence'])
+        print('Chegou antes do checkbox')
 
-        with open('/home/rafael/garf/src/garf.ini', 'wb') as configfile:
+        config.set('app', 'only_ip', 'True' if request.form.get('only_ip') else 'False')
+
+        with open('/home/rafael/garf/src/garf.ini', 'w') as configfile:
             config.write(configfile)
 
         os.system('python3 setup.py')
@@ -39,7 +42,8 @@ def configuracoes():
         'config' : {
             'execution_interval' : config['app']['execution_interval'],
             'rule_dureation' : config['app']['rule_dureation'],
-            'max_occurrence' : config['app']['max_occurrence']
+            'max_occurrence' : config['app']['max_occurrence'],
+            'only_ip' : config['app']['only_ip']
         }
     }
 
