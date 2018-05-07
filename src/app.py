@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, jsonify
 from configparser import ConfigParser
-from garf import get_history, get_input_rules, delete_rule
+from garf import get_history, get_input_rules, delete_rule, get_graph_data
 from elasticsearch import Elasticsearch
+from datetime import datetime
 import os
 import json
 
@@ -21,14 +22,14 @@ def index():
 def configuracoes():
 
     config = ConfigParser()
-    config.read('garf.ini')
+    config.read('/home/rafael/garf/src/garf.ini')
     if request.method == 'POST':
 
         config.set('app', 'execution_interval', request.form['execution_interval'])
         config.set('app', 'rule_dureation', request.form['rule_dureation'])
         config.set('app', 'max_occurrence', request.form['max_occurrence'])
 
-        with open('garf.ini', 'wb') as configfile:
+        with open('/home/rafael/garf/src/garf.ini', 'wb') as configfile:
             config.write(configfile)
 
         os.system('python3 setup.py')
@@ -62,9 +63,12 @@ def historico():
 
     rules = []
     if request.method == 'POST':
-        data_inicio = request.form['inicio']
-        data_fim = request.form['fim']
-        rules = get_history(es, data_inicio, data_fim)
+        data_inicio = request.form['inicio']+' 00:00'
+        data_fim = request.form['fim']+' 23:59'
+
+        inicio = datetime.strptime(data_inicio, '%d/%m/%Y %H:%M')
+        fim = datetime.strptime(data_fim, '%d/%m/%Y %H:%M')
+        rules = get_history(es, inicio, fim)
 
         return jsonify(rules)
    
@@ -73,6 +77,23 @@ def historico():
     }
 
     return render_template('historico.html', context=context)
+
+
+@app.route("/grafico", methods=['POST'])
+def graph():
+    rules = {}
+    if request.method == 'POST':
+        inicio = datetime.strptime(request.form['inicio'], '%d/%m/%Y')
+        fim = datetime.strptime(request.form['fim'], '%d/%m/%Y')
+        
+        grouped_rules = get_graph_data(es, inicio, fim)
+
+        for rule in grouped_rules:
+            rules[rule['created_in_key']] = rule['doc_count']
+            
+    print(rules)
+    return jsonify(rules)
+
 
 @app.route("/remove-rule", methods=['POST'])
 def remove_rule():

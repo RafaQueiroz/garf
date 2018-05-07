@@ -1,8 +1,16 @@
+var ruleChart;
+
 $(document).ready(function(){
+
+    var today = new Date();
+    var before =new Date(); 
+    before.setDate(today.getDate() - 5);
 
     $('#data-inicio').datepicker();
     $('#data-fim').datepicker();
 
+    $('#data-inicio').datepicker('setDate', before);
+    $('#data-fim').datepicker('setDate', today);
 
     $('.datepicker').on('change', function(){
         var inicio = $('#data-inicio').val();
@@ -21,7 +29,7 @@ $(document).ready(function(){
             dataType : 'json',
             method: 'post',
             success : function(rules){
-
+                
                 var linhas = $('#historico > tbody ');
 
                 linhas.html('');
@@ -29,9 +37,10 @@ $(document).ready(function(){
                     linhas.append(row(value));
                 });
             }
-        })
+        });
     });
 
+    $('.datepicker').change();
 });
 
 function row(rule){

@@ -1,0 +1,29 @@
+{
+  "template" : "history",
+  "index_patterns" : "histo*",
+  "version" : 5001,
+  "settings" : {
+    "index.refresh_interval" : "5s"
+  },
+  "mappings" : {
+    "_default_" : {
+      "properties" : {
+        "created_in": {
+          "type": "date"
+        },
+        "created_in_key":{
+          "type" : "keyword"
+        },
+        "destination_port": {
+          "type": "keyword"
+        },
+        "protocol": {
+          "type": "keyword"
+        },
+        "source_ip": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}

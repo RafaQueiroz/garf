@@ -106,7 +106,6 @@ def delete_rule(log):
 
     filter_chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "INPUT")
 
-    counter = 0
     for r in filter_chain.rules:
         rule = rule_to_dict(r)
         if log['source_ip'] in rule['source_ip'] and\
@@ -126,6 +125,7 @@ def add_to_history(elastic, rules=[]):
     for rule in rules:
         document = {
             'created_in' : datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
+            'created_in_key' : datetime.now().strftime('%Y-%m-%d'),
             'source_ip': rule['source_ip'],
             'destination_port': rule['destination_port'],
             'protocol': rule['protocol']
@@ -303,14 +303,17 @@ def check_if_exists(log):
     return body
 
 
-def get_history(elastic, raw_inicio, raw_fim):
+def get_history(elastic, inicio, fim):
     if not elastic.indices.exists(index='history'):
         return []
 
-    inicio = datetime.strptime(raw_inicio, '%d/%m/%Y')
-    fim = datetime.strptime(raw_fim, '%d/%m/%Y')
-
     return get_logs(elastic, index='history', body=get_by_date_body(inicio, fim))
+
+def get_graph_data(elastic, begin, end):
+    logs = group_by(elastic, ['created_in_key'], False,
+                    body=get_by_date_body(begin, end))
+    
+    return logs
 
 def main():
     elastic = Elasticsearch(verify_certs=True)
