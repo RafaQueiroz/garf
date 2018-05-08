@@ -1,14 +1,56 @@
-{% extends "base.html" %} 
-
-{% block body %}
- <!-- <div class="columns">
-        <div class="col-8">
-            <canvas id="ruleChart" width="400" height="400"></canvas>
+{% extends "base.html" %} {% block body %}
+<div class="container">
+    <div class="columns">
+        <div class="col-8 col-mx-auto config-fields">
+            <div class="section-name">
+                <h1>Estatísticas </h1>
+                <div class="interval">
+                    <input type="text" id="data-inicio" class="datepicker">
+                    <span> até </span>
+                    <input type="text" id="data-fim" class="datepicker">
+                </div>
+            </div>
         </div>
-    </div> -->
-{% end block %}
+    </div>
+    <div class="columns">
+        <div class="col-8 col-mx-auto config-fields">
+            <div class="columns">
+                <div class="col-5 col-mx-auto">
+                    <!-- Tabela de regras -->
+                    <table class="table table-striped table-hover top-ips-table" id="top-ips">
+                        <thead>
+                            <tr>
+                                <th>ip</th>
+                                <th>Frequência</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <p>Ips mais presentes em regras geradas pelo GARF</p>
+                </div>
 
-{% block scripts %}
+                <div class="col-5 col-mx-auto">
+                    <!-- Tabela de regras -->
+                    <table class="table table-striped table-hover top-ports-table" id="top-ports">
+                        <thead>
+                            <tr>
+                                <th>Porta</th>
+                                <th>Frequência</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <p>Portas mais presentes em regras geradas pelo GARF</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %} {% block scripts %}
 <!-- <script src="{{url_for('static', filename='scripts/Chart.js/Chart.min.js')}}"></script>  -->
 <script src="{{url_for('static', filename='scripts/Chart.js/Chart.bundle.min.js')}}"></script> 
-{% end block %}
+<script src="{{url_for('static', filename='scripts/estatisticas.js')}}"></script> 
+{% endblock %}

@@ -13,23 +13,23 @@ $(document).ready(function(){
     $('#data-fim').datepicker('setDate', today);
 
 
-    ruleChart = new Chart($('#ruleChart'), {
-        type : 'line',
-        data : {
-            datasets : [{
-                data : [],
-                label : 'Regras',
-                borderColor : 'red',
-                fill : true
-            }]  
-        },
-        options: {
-          title: {
-            display: true,
-            text: 'Regras geradas por dia'
-          }
-        }
-    });
+    // ruleChart = new Chart($('#ruleChart'), {
+    //     type : 'line',
+    //     data : {
+    //         datasets : [{
+    //             data : [],
+    //             label : 'Regras',
+    //             borderColor : 'red',
+    //             fill : true
+    //         }]  
+    //     },
+    //     options: {
+    //       title: {
+    //         display: true,
+    //         text: 'Regras geradas por dia'
+    //       }
+    //     }
+    // });
 
     $('.datepicker').on('change', function(){
         var inicio = $('#data-inicio').val();
@@ -38,10 +38,10 @@ $(document).ready(function(){
         if( inicio == null || inicio == "" || fim == null || fim == "")
             return ;
         
-        updateGraph(ruleChart, inicio, fim)
+        // updateGraph(ruleChart, inicio, fim)
 
         $.ajax({
-            url : '/historico',
+            url : '/estatisticas',
             data: {
                 inicio : inicio,
                 fim : fim
@@ -49,13 +49,43 @@ $(document).ready(function(){
             cache : false,
             dataType : 'json',
             method: 'post',
-            success : function(rules){
+            success : function(data){
                 
-                var linhas = $('#historico > tbody ');
+                var topIpsBody = $('#top-ips > tbody');
 
-                linhas.html('');
-                $.each(rules, function(index, value){
-                    linhas.append(row(value));
+                topIpsBody.html('');
+                $.each(data.top_ips, function(index, value){
+
+                    var ip = value.source_ip.split('/')[0];
+
+                    topIpsBody.append(
+                        '<tr> '+
+                        '   <td>'+ip+'</td>'+
+                        '   <td>'+value.doc_count+'</td>'+
+                        '</tr> '
+                    );
+
+                    if(index == 4)
+                        return false;
+                });
+
+                var topPortsBody = $('#top-ports > tbody');
+
+                topPortsBody.html('');
+                var count = 0;
+                $.each(data.top_ports, function(index, value){
+
+                    if(value.destination_port.trim() != ""){
+                        topPortsBody.append(
+                            '<tr> '+
+                            '   <td>'+value.destination_port+'</td>'+
+                            '   <td>'+value.doc_count+'</td>'+
+                            '</tr> '
+                        );
+                        count++;
+                    }
+                    if(count == 5)
+                        return false;
                 });
             }
         });
@@ -63,6 +93,9 @@ $(document).ready(function(){
 
     $('.datepicker').change();
 });
+
+
+
 function get_between(inicio, fim){
     data_inicio = to_date(inicio);
     data_fim = new to_date(fim);

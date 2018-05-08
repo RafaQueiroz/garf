@@ -43,8 +43,6 @@ def format_rule(log):
     rule = iptc.Rule()                                     
     rule.src = log['source_ip']
 
-    print(log.keys())
-
     if 'protocol' in log.keys():
         rule.protocol = log['protocol']
         
@@ -101,7 +99,6 @@ def find_rule(log):
         return None
 
     for rule in rules:
-        print('Regra: {}'.format(rule))
         if log['source_ip'] in rule['source_ip'] :
             if config['app']['only_ip'] == 'True':
                 return rule
@@ -123,9 +120,12 @@ def delete_rule(log):
                 return True
             elif log['destination_port'] == rule['destination_port'] and\
              log['protocol'] == rule['protocol']:
-                filter_chain.delete_rule(r)
-                return True
-
+                try:
+                    filter_chain.delete_rule(rule)
+                    return True
+                except iptc.ip4tc.IPTCError:
+                    logging.error('Nao foi possivel remover a regra: {}'.format(rule_to_dict(rule)))
+            
     return False
 
 def add_to_history(elastic, rules=[]):
@@ -156,7 +156,11 @@ def remove_expire_rules():
 
         if expires_in < datetime.now():
             counter += 1
-            filter_chain.delete_rule(rule)
+            try:
+                filter_chain.delete_rule(rule)
+            except iptc.ip4tc.IPTCError:
+                logging.error('Nao foi possivel remover a regra: {}'.format(rule_to_dict(rule)))
+
     logging.info('{} regra(s) foram removidas'.format(str(counter)))
 
 
@@ -191,7 +195,7 @@ def get_logs(elastic, index='', body='', fields=['_id', 'source_ip', 'destinatio
     return logs
 
 
-def group_by(elastic, fields, include_missing, body={}):
+def group_by(elastic, idx, fields, include_missing, body={}):
     current_level_terms = {'terms': {'field': fields[0]}}
     agg_spec = {fields[0]: current_level_terms}
 
@@ -218,8 +222,8 @@ def group_by(elastic, fields, include_missing, body={}):
         current_level_terms = next_level_terms
 
     body['aggs'] = agg_spec
-
-    response = elastic.search(body=body)
+    
+    response = elastic.search(index=idx, body=body)
     agg_result = response['aggregations'] if response else []
     return get_docs_from_agg_result(agg_result, fields, include_missing)
 
@@ -321,7 +325,19 @@ def get_history(elastic, inicio, fim):
     return get_logs(elastic, index='history', body=get_by_date_body(inicio, fim))
 
 def get_graph_data(elastic, begin, end):
-    logs = group_by(elastic, ['created_in_key'], False,
+    logs = group_by(elastic, 'history', ['created_in_key'], False,
+                    body=get_by_date_body(begin, end))
+    
+    return logs
+
+def get_top_ips(elastic, begin, end):
+    logs = group_by(elastic, 'history', ['source_ip'], False,
+                    body=get_by_date_body(begin, end))
+    
+    return logs
+
+def get_top_ports(elastic, begin, end):
+    logs = group_by(elastic, 'history', ['destination_port'], False,
                     body=get_by_date_body(begin, end))
     
     return logs
@@ -339,8 +355,8 @@ def main():
     else:
         group_list = ['source_ip', 'destination_port', 'protocol']
 
-    print(group_list)
-    logs = group_by(elastic, group_list, False,
+
+    logs = group_by(elastic, 'honeyd', group_list, False,
                     body=get_group_by_body(datetime.now()))
 
     logging.info('FILTRANDO LOGS PARA GERAR AS REGRAS') 

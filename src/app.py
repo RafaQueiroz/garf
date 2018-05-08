@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, jsonify
 from configparser import ConfigParser
-from garf import get_history, get_input_rules, delete_rule, get_graph_data
+from garf import get_history, get_input_rules, delete_rule, get_graph_data, get_top_ips, get_top_ports
 from elasticsearch import Elasticsearch
 from datetime import datetime
 import os
@@ -77,7 +77,7 @@ def historico():
         return jsonify(rules)
    
     context= {
-        'title' : 'Historico'
+        'title' : 'Histórico'
     }
 
     return render_template('historico.html', context=context)
@@ -97,6 +97,29 @@ def graph():
             
     print(rules)
     return jsonify(rules)
+
+@app.route("/estatisticas", methods=['GET','POST'])
+def stats():
+
+    if request.method == 'POST':
+        inicio = datetime.strptime(request.form['inicio']+' 00:00', '%d/%m/%Y %H:%M')
+        fim = datetime.strptime(request.form['fim']+' 23:59', '%d/%m/%Y %H:%M')
+
+        top_ips = get_top_ips(es, inicio, fim)
+        top_ports = get_top_ports(es, inicio, fim)
+
+        data = {
+            'top_ips': top_ips,
+            'top_ports' : top_ports
+        }
+
+        return jsonify(data)
+
+    context = {
+        'title' : 'Estatísticas',
+    }
+
+    return render_template('estatisticas.html', context=context)
 
 
 @app.route("/remove-rule", methods=['POST'])
