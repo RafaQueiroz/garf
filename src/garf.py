@@ -148,21 +148,33 @@ def remove_expire_rules():
     filter_chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "INPUT")
 
     counter = 0
-    for rule in filter_chain.rules:
+    
+    while True:
+        rule = get_expired_rule(filter_chain)
+
+        if not rule:
+            break
+            
+        try:
+            filter_chain.delete_rule(rule)
+            counter += 1
+        except iptc.ip4tc.IPTCError:
+            logging.error('Nao foi possivel remover a regra: {}'.format(rule_to_dict(rule)))
+
+    logging.info('{} regra(s) foram removidas'.format(str(counter)))
+
+def get_expired_rule(filter):
+    
+    for rule in filter.rules:
         expires_in = None
         for match in rule.matches:
             if match.name == 'comment':
                 expires_in = datetime.strptime(match.comment, '%Y-%m-%d %H:%M')
 
         if expires_in < datetime.now():
-            counter += 1
-            try:
-                filter_chain.delete_rule(rule)
-            except iptc.ip4tc.IPTCError:
-                logging.error('Nao foi possivel remover a regra: {}'.format(rule_to_dict(rule)))
+            return rule
 
-    logging.info('{} regra(s) foram removidas'.format(str(counter)))
-
+    return None
 
 def get_logs(elastic, index='', body='', fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date', 'expires_in', 'created_in']):
     # Fetch data from elasticsearch
