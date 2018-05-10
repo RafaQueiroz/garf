@@ -152,9 +152,9 @@ def remove_expire_rules():
     while True:
         rule = get_expired_rule(filter_chain)
 
-        if not rule:
+        if rule is None:
             break
-            
+
         try:
             filter_chain.delete_rule(rule)
             counter += 1
@@ -163,9 +163,9 @@ def remove_expire_rules():
 
     logging.info('{} regra(s) foram removidas'.format(str(counter)))
 
-def get_expired_rule(filter):
-    
-    for rule in filter.rules:
+def get_expired_rule(filter_chain):
+
+    for rule in filter_chain.rules:
         expires_in = None
         for match in rule.matches:
             if match.name == 'comment':
@@ -176,13 +176,14 @@ def get_expired_rule(filter):
 
     return None
 
-def get_logs(elastic, index='', body='', fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date', 'expires_in', 'created_in']):
+def get_logs(elastic, index='', body='',
+     fields=['_id', 'source_ip', 'destination_port', 'protocol', 'access_date', 'expires_in', 'created_in'], sort_str=''):
     # Fetch data from elasticsearch
 
     logs = []
 
     try:
-        result = elastic.search(index=index, ignore=[400, 404], body=body)
+        result = elastic.search(index=index, ignore=[400, 404], body=body, sort=sort_str)
     except NotFoundError :
         return logs
 
@@ -207,7 +208,7 @@ def get_logs(elastic, index='', body='', fields=['_id', 'source_ip', 'destinatio
     return logs
 
 
-def group_by(elastic, idx, fields, include_missing, body={}):
+def group_by(elastic, idx, fields, include_missing, body={},sort_str=''):
     current_level_terms = {'terms': {'field': fields[0]}}
     agg_spec = {fields[0]: current_level_terms}
 
@@ -235,7 +236,7 @@ def group_by(elastic, idx, fields, include_missing, body={}):
 
     body['aggs'] = agg_spec
     
-    response = elastic.search(index=idx, body=body)
+    response = elastic.search(index=idx, body=body, sort=sort_str)
     agg_result = response['aggregations'] if response else []
     return get_docs_from_agg_result(agg_result, fields, include_missing)
 
@@ -334,23 +335,23 @@ def get_history(elastic, inicio, fim):
     if not elastic.indices.exists(index='history'):
         return []
 
-    return get_logs(elastic, index='history', body=get_by_date_body(inicio, fim))
+    return get_logs(elastic, index='history', body=get_by_date_body(inicio, fim), sort_str='created_in:desc')
 
 def get_graph_data(elastic, begin, end):
     logs = group_by(elastic, 'history', ['created_in_key'], False,
-                    body=get_by_date_body(begin, end))
+                    body=get_by_date_body(begin, end), sort_str='created_in:desc')
     
     return logs
 
 def get_top_ips(elastic, begin, end):
     logs = group_by(elastic, 'history', ['source_ip'], False,
-                    body=get_by_date_body(begin, end))
+                    body=get_by_date_body(begin, end), sort_str='created_in:desc')
     
     return logs
 
 def get_top_ports(elastic, begin, end):
     logs = group_by(elastic, 'history', ['destination_port'], False,
-                    body=get_by_date_body(begin, end))
+                    body=get_by_date_body(begin, end), sort_str='created_in:desc')
     
     return logs
 
@@ -369,7 +370,7 @@ def main():
 
 
     logs = group_by(elastic, 'honeyd', group_list, False,
-                    body=get_group_by_body(datetime.now()))
+                    body=get_group_by_body(datetime.now()), sort_str='access_date:desc')
 
     logging.info('FILTRANDO LOGS PARA GERAR AS REGRAS') 
     filtered_logs = []

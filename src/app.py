@@ -20,7 +20,6 @@ def index():
 
 @app.route("/configuracoes", methods=['GET', 'POST'])
 def configuracoes():
-    print('entrou')
     config = ConfigParser()
     config.read('/home/rafael/garf/src/garf.ini')
     if request.method == 'POST':
