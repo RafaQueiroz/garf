@@ -52,6 +52,7 @@ fi
 
 echo 'add index template to elasticsearch'
 curl -XPUT 'http://localhost:9200/_template/honeyd' -H 'Content-Type: application/json' -d @$GARF_HOME/conf/log-template.json
+curl -XPUT 'http://localhost:9200/_template/history' -H 'Content-Type: application/json' -d @$GARF_HOME/conf/history-template.json
 
 echo 'creating garf cronjob'
 
